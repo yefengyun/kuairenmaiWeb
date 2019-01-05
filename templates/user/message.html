@@ -1,0 +1,41 @@
+{%extends 'user/userbase.html'%}
+
+{%block titlecss%}
+<title>快人脉-我的消息</title>
+{%endblock%}
+{%block body%}
+<div class="c-user__control-panel">
+    <div class="c-user-control">
+        <div class="c-user-tab c-user-tab--message">
+            <header class="c-user-tab__header">
+                <ul class="nav nav-tabs c-user-tab__nav-list" id="user-message-tab" role="tablist">
+                    <li class="nav-item c-user-tab__nav-item">
+                        <a class="nav-link c-user-tab__nav-link active" id="reply-message-tab" data-toggle="tab"
+                           href="#reply-message-content" role="tab" aria-controls="用户回复" aria-selected="true">用户回复</a>
+                    </li>
+                    <li class="nav-item c-user-tab__nav-item">
+                        <a class="nav-link c-user-tab__nav-link" id="system-message-tab" data-toggle="tab"
+                           href="#system-message-content" role="tab" aria-controls="系统消息" aria-selected="false">系统消息</a>
+                    </li>
+                </ul>
+            </header>
+            <div class="tab-content c-user-tab__content">
+                <div class="tab-pane c-user-tab__pane active" id="reply-message-content" role="tabpanel"
+                     aria-labelledby="reply-message-tab">
+                    <ul class="list-unstyled c-user-todolist c-user-todolist--message-reply">
+
+
+                    </ul>
+                </div>
+                <div class="tab-pane c-user-tab__pane" id="system-message-content" role="tabpanel"
+                     aria-labelledby="system-message-tab">
+                    <ul class="list-unstyled c-user-todolist c-user-todolist--message-system">
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

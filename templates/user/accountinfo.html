@@ -1,0 +1,60 @@
+{%extends 'user/accountbase.html'%}
+
+{%block titlecss%}
+<title>快人脉-我的消息</title>
+{%endblock%}
+{%block body%}
+<div class="c-user__control-panel">
+    <div class="c-user-control">
+        <header class="c-user-control__header">
+            <h4 class="c-user-control__title">更新职业信息{%if msg%}&nbsp;&nbsp;&nbsp;&nbsp;<span
+                    style="color: red">{{msg}}</span>{%endif%}</h4></header>
+        <div class="c-user-control__content">
+            <form class="c-account-form c-account-form--update-career" action="/user/jobinfo/" method="post">
+                {%csrf_token%}
+                <div class="c-account-form__group" style="display: none;"><label
+                        class="c-account-form__label is-required" for="username">用户名</label><input
+                        class="c-account-form__field" id="username" placeholder="请输入用户名，可以为汉字、字母和数字"
+                        value="{{username}}"
+                        name="zname"></div>
+                <div class="c-account-form__group"><label class="c-account-form__label is-required"
+                                                          for="industry">所属行业</label>
+                    <select class="c-account-form__field" id="industry" name="industry" required="">
+
+                        <option class="c-accoutn-form__option" value="{{defjobid}}" selected="">不修改</option>
+                        {%for job in jobs%}
+                        <option value="{{job.id}}">{{job.job}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+                <div class="c-account-form__group"><label class="c-account-form__label is-required"
+                                                          for="company">公司名称</label><input
+                        class="c-account-form__field" id="company" name="company" value="{{company}}"
+                        placeholder="请输入您的公司名称"></div>
+                <div class="c-account-form__group"><label class="c-account-form__label is-required"
+                                                          for="brand">品牌名称</label><input
+                        class="c-account-form__field" id="brand" name="brand" value="{{brand}}" placeholder="请输入您的品牌名称">
+                </div>
+
+                <div class="c-account-form__group"><label class="c-account-form__label is-required"
+                                                          for="brand">职位</label><input class="c-account-form__field"
+                                                                                       id="name" name="zjob"
+                                                                                       value="{{job}}"
+                                                                                       placeholder="请输入您的职位"></div>
+                <div class="c-account-form__group"><label class="c-account-form__label"
+                                                          for="brand">真实姓名</label><input
+                        class="c-account-form__field" id="truename" name="xname" value="{{truename}}"
+                        placeholder="请输入您的真实姓名">
+                </div>
+
+                <div class="c-account-form__group"><label class="c-account-form__label"
+                                                          for="intro">企业简介</label><textarea
+                        class="c-account-form__field" id="intro" name="intro"
+                        placeholder="请输入您的企业简介">{{cpintroducion}}</textarea>
+                </div>
+                <button class="c-btn c-btn-theme c-btn-radius c-account-form__submit">保存</button>
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}

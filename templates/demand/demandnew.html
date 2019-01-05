@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{%block titlecss%}
+<title>快人脉</title>
+{%endblock%}
+
+{%block body%}
+<link rel="stylesheet" href="/static/css/bootstrap.css">
+<link rel="stylesheet" href="/static/css/main/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<div class="c-new-post" style="margin-top: 10px">
+    <header class="c-new-post__header">
+        <h1 class="c-new-post__title">需求发布</h1>
+    </header>
+    <form action="/commend/publishdemand/" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        <div class="c-new-post__form-wrapper">
+            <div class="c-new-post__form-field c-new-post__form-field--post-title is-required">
+                <label class="c-new-post__field-name" for="post-title">帖子标题</label>
+                <input class="c-new-post__field-input" id="post-title" name="zname" value="" placeholder="示例：搬家出售一台电脑"
+                       maxlength="50"
+                       required>
+            </div>
+            <div class="c-new-post__form-field c-new-post__form-field--industry is-required"><label
+                    class="c-new-post__field-name"
+                    for="industry">招标类型</label>
+                <select class="c-new-post__field-input" id="industry" name="industry" required>
+                    <option class="c-new-post__select-option" value="-1">请选择您的招标类型</option>
+                    {% for u in classobj %}
+                    <option value="{{u.id}}">{{u.catagory}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="c-new-post__form-field c-new-post__form-field--aim-area is-required">
+                <label class="c-new-post__field-name">地域要求</label>
+                <div class="select-area" data-toggle="distpicker">
+                    <select class="c-new-post__field-input" id="select-province" name="aim-area-province"
+                            required></select>
+                    <select class="c-new-post__field-input" id="select-city" name="aim-area-city" required></select>
+                    <button class="c-btn c-btn-theme c-btn-radius c-new-post__add-area" id="add-area" type="button"
+                            name="add-area"
+                            disabled>确认添加
+                    </button>
+                </div>
+                <ul class="show-area"></ul>
+                <input class="c-new-post__field-input" id="chengqu" name="diqu2" value="" placeholder=""
+                       style="display: none;">
+            </div>
+            <div class="c-new-post__form-field c-new-post__form-field--nickname  is-required">
+                <label class="c-new-post__field-name" for="nickname">称呼</label>
+                <input class="c-new-post__field-input" id="nickname" name="nickname" value="{{nikename}}"
+                       placeholder="怎样称呼您"
+                       required>
+            </div>
+            <div class="c-new-post__form-field c-new-post__form-field--wechat is-required">
+                <label class="c-new-post__field-name" for="wechat">微信</label>
+                <input class="c-new-post__field-input" id="wechat" name="wechat" value="{{wechar}}" placeholder="请输入微信号"
+                       required>
+            </div>
+            <div class="c-new-post__form-field c-new-post__form-field--phone">
+                <label class="c-new-post__field-name" for="phone">手机号</label>
+                <input class="c-new-post__field-input" id="phone" name="zphone" value="{{phone}}" placeholder="请输入电话号码"
+                       required>
+            </div>
+            <div class="c-new-post__form-field c-new-post__form-field--qq">
+                <label class="c-new-post__field-name" for="qq">QQ</label>
+                <input class="c-new-post__field-input" id="qq" name="zqq" value="{{qq}}" placeholder="请输入QQ号码">
+            </div>
+            <div class="c-new-post__form-field c-new-post__form-field--deadline is-required">
+                <label class="c-new-post__field-name" for="deadline">截止时间</label>
+                <input class="c-new-post__field-input " id="timer1" name="jztime" value="" placeholder="请选择日期时间"
+                       onclick="timer()"
+                       readonly required>
+            </div>
+            <script>
+                function timer() {
+                    $("#schedule-box").show();
+                }
+            </script>
+            <div class="c-new-post__form-field c-new-post__form-field--deadline is-required">
+                <div id='schedule-box' class="boxshaw" style="display: none;"></div>
+            </div>
+
+            <script>
+                function checkedas(a, b, c) {
+
+                    if (c == 1) {
+                        var ttz = "tuiguang";
+                        var tts = "tuiguangs";
+                    } else {
+                        var ttz = "ziyuan";
+                        var tts = "ziyuans";
+                    }
+
+                    if (document.getElementById(ttz + b).checked) {
+                        //选中
+                        var el = $('#' + tts).val();
+
+                        if (el == "") {
+                            $('#' + tts).val(el + a);
+                        } else {
+                            $('#' + tts).val(el + " " + a);
+                        }
+
+                    } else {
+                        //取消
+                        var el = $('#' + tts).val();
+                        el = el.replace(a, '');
+                        $('#' + tts).val(el);
+
+                    }
+                }
+            </script>
+            <link rel="stylesheet" href="/static/css/font_234130_nem7eskcrkpdgqfr.css">
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                ul {
+                    list-style: none;
+                }
+
+                #schedule-box {
+                    width: 320px;
+                    /*margin: 0 auto;*/
+                    padding: 35px 20px;
+                    font-size: 13px;
+                    margin-left: 122px;
+                }
+
+                .schedule-hd {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0 15px;
+                }
+
+                .today {
+                    flex: 1;
+                    text-align: center;
+                }
+
+                .ul-box {
+                    overflow: hidden;
+                }
+
+                .ul-box > li {
+                    float: left;
+                    width: 14.28%;
+                    text-align: center;
+                    padding: 5px 0;
+                }
+
+                .other-month {
+                    color: #999999;
+                }
+
+                .current-month {
+                    color: #333333;
+                }
+
+                .today-style {
+                    border-radius: 50%;
+                    background: #58d321;
+                }
+
+                .arrow {
+                    cursor: pointer;
+                }
+
+                .dayStyle {
+                    display: inline-block;
+                    width: 35px;
+                    height: 35px;
+                    border-radius: 50%;
+                    text-align: center;
+                    line-height: 35px;
+                    cursor: pointer;
+                }
+
+                .current-month > .dayStyle:hover {
+                    background: #00BDFF;
+                    color: #ffffff;
+                }
+
+                .today-flag {
+                    background: #dde0e0;
+                    color: #fff;
+                }
+
+                .boxshaw {
+                    box-shadow: 2px 2px 15px 2px #e3e3e3;
+                }
+
+                .selected-style {
+                    background: #00BDFF;
+                    color: #ffffff;
+                }
+
+                #h3Ele {
+                    text-align: center;
+                    padding: 10px;
+                }
+            </style>
+            <script src="/static/js/schedule.js"></script>
+            <script>
+                var mySchedule = new Schedule({
+                    el: '#schedule-box',
+                    //date: '2018-9-20',
+                    clickCb: function (y, m, d) {
+                        document.querySelector('#timer1').value = y + '-' + m + '-' + d;
+                        $("#schedule-box").hide();
+                    },
+                    nextMonthCb: function (y, m, d) {
+                        document.querySelector('#timer1').value = y + '-' + m + '-' + d;
+
+                    },
+                    nextYeayCb: function (y, m, d) {
+                        document.querySelector('#timer1').value = y + '-' + m + '-' + d;
+
+                    },
+                    prevMonthCb: function (y, m, d) {
+                        document.querySelector('#timer1').value = y + '-' + m + '-' + d;
+
+                    },
+                    prevYearCb: function (y, m, d) {
+                        document.querySelector('#timer1').value = y + '-' + m + '-' + d;
+
+                    }
+
+                });
+            </script>
+            <div class="c-new-post__form-field c-new-post__form-field--demand-details is-required">
+                <label class="c-new-post__field-name">需求详情</label>
+                <textarea class="c-new-post__field-input c-new-post__field-textarea" rows="10" name="tigongss"
+                          placeholder="请简要概括您的需求详情" name="promotions"></textarea>
+            </div>
+            <br/><br/>
+            <div class="logo">
+                <label class="c-new-post__field-name">上传图片</label>
+                <img src="/static/images/init.png"/>
+            </div>
+            <div class="upload">
+                <input type="file" name="imgfile"/>
+            </div>
+            <br/>
+            <div>
+                <label class="c-new-post__field-name">赏金</label>
+                <input class="c-new-post__field-money" id="money" type="number" name="somoney" value=""
+                       placeholder="赏金金额">金币
+            </div>
+            <br/>
+            <br/>
+            <button class="c-btn c-btn-theme c-btn-radius c-new-post__form-submit">发布需求</button>
+        </div>
+    </form>
+</div>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/js/distpicker.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="/static/js/picker.js?id=1010"></script>
+{%endblock%}

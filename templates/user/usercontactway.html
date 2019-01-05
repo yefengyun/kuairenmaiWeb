@@ -1,0 +1,33 @@
+{%extends 'user/accountbase.html'%}
+
+{%block titlecss%}
+<title>快人脉-联系方式</title>
+{%endblock%}
+{%block body%}
+<div class="c-user__control-panel">
+    <div class="c-user-control">
+        <header class="c-user-control__header">
+            <h4 class="c-user-control__title">更新联系方式{%if msg%}&nbsp;&nbsp;&nbsp;&nbsp;<span
+                    style="color: red">{{msg}}</span>{%endif%}</h4></header>
+        <div class="c-user-control__content">
+            <form class="c-account-form c-account-form--update-contact" action="/user/contactwaysave/" method="post">
+                {% csrf_token%}
+                <div class="c-account-form__group"><label class="c-account-form__label"
+                                                          for="phone-number">微信</label><input
+                        class="c-account-form__field" id="phone-number" placeholder="请输入您的微信号码" value="{{wechar}}"
+                        name="wei">
+                </div>
+                <div class="c-account-form__group"><label class="c-account-form__label" for="qq">QQ</label><input
+                        class="c-account-form__field" id="qq" type="qq" placeholder="请输入您的QQ号码" value="{{qq}}"
+                        name="qq">
+                </div>
+
+                <div class="c-account-form__group"><label class="c-account-form__label" for="email">邮箱</label><input
+                        class="c-account-form__field" id="email" type="email" value="{{email}}" placeholder="请输入您的邮箱地址"
+                        name="email"></div>
+                <button class="c-btn c-btn-theme c-btn-radius c-account-form__submit">保存</button>
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}

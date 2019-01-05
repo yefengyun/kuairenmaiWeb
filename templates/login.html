@@ -1,0 +1,94 @@
+{% extends 'base.html'%}
+{% block titlecss %}
+<title>快人脉--登录</title>
+{%endblock%}
+{%block body%}
+<main class="page-main page-main--auth">
+    <div class="c-auth">
+        <div class="c-auth__header">
+            <h2 class="c-auth__title">登录快人脉</h2>
+        </div>
+        {% if msg %}
+        <div><span style="color: red;">
+            {{msg}}
+        </span></div>
+        {%endif%}
+        <div class="c-auth__content">
+            <form class="c-auth__form" id="loginfrom" action="/user/login_handler/" method="post">
+                {% csrf_token %}
+                <div class="c-auth__form-group c-auth__form-group--phone">
+                    <input class="c-auth__input" placeholder="帐号" name="username" id="username" type="text" required>
+                </div>
+                <div class="c-auth__form-group c-auth__form-group--password">
+                    <input class="c-auth__input" placeholder="密码" name="password" id="password" type="password"
+                           onkeydown=KeyDown() required>
+                </div>
+                <div class="c-auth__form-group c-auth__form-group--action"
+                     style="text-align: center;color: red;display: none;" id="p1">
+						<span id="ts">
+							密码错误
+						</span>
+                </div>
+                <div class="c-auth__form-group c-auth__form-group--action">
+                    <a class="btn c-auth__submit" style="color: #ffffff;" onclick="logw()">
+                        登录
+                    </a>
+                </div>
+            </form>
+
+            <script>
+                function KeyDown() {
+                    if (event.keyCode == 13) {
+                        logw();
+                    }
+                }
+
+                function logw() {
+                    if ($("#username").val() == '') {
+                        $("#p1").show();
+                        $("#ts").text("请填写帐号!");
+                    } else {
+                        if ($("#password").val() == '') {
+                            $("#p1").show();
+                            $("#ts").text("请填写密码!");
+                        } else {
+                            $("#ts").text("登录中!");
+                            from=$('#loginfrom').serialize()
+
+                            $.ajax({
+                              url:'/user/login_handler/',
+                              type:'POST',
+                              dataType:'json',
+                              data: from,
+                              success:function(rs){
+                                    console.log(rs)
+                                    <!--var obj=JSON.parse(rs);-->
+                                    if(rs.status==400){
+                                        $("#p1").show();
+                                        $("#ts").text(rs.data);
+                                    }else{
+                                        location.href="/user/index/"
+                                    }
+                              },
+                              error:function(rs){
+                                    alert(rs)
+                              }
+                            })
+                        }
+                    }
+                }
+
+                $("#p11").hide();
+
+            </script>
+
+            <div class="c-auth__more">
+                <a class="c-auth__forgot-password" href="/user/upass/">忘记密码</a><span class="c-auth__register"><span
+                    class="c-auth__register-tip">还未注册</span>
+						<a class="c-auth__link" href="/user/register/">去注册</a>
+					</span>
+            </div>
+        </div>
+    </div>
+</main>
+{%endblock%}

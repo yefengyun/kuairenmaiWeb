@@ -1,0 +1,317 @@
+{%extends 'user/userbase.html'%}
+{%block titlecss%}
+<title>快人脉 - 个人资料</title>
+<link href="/static/js/css/modules/layer/default/layer.css">
+<script src="/static/js/layui.js"></script>
+<script src="/static/js/lay/modules/form.js"></script>
+<script src="/static/js/lay/modules/layer.js"></script>
+<script src="/static/js/lay/modules/jquery.js"></script>
+<script src="/static/js/jquery.min.js"></script>
+{%endblock%}
+{%block body%}
+<div class="c-user__control-panel">
+
+    <div class="c-user-control c-user-profile">
+        <div class="clearfix c-user-profile__module c-user-profile__module--personal">
+
+
+            <div class="c-user-profile__avatar">
+                <div class="upload-image"><label class="upload-image__label" for="upload-avatar-input"
+                                                 style="    width: 100px;height: 100px;" onclick="txs()">
+
+                    <img class="c-user-profile__avatar upload-image upload-image__label"
+                         src="/media/{{headimg}}" alt="头像"
+                         style="width: 100px;height: 100px;">
+                </label>
+                </div>
+            </div>
+
+
+            <script>
+                function txs() {
+                    //一般直接写在一个js文件中
+                    layui.use(['layer', 'form'], function () {
+                        //信息框-例4
+                        layer.open({
+                            type: 1,
+                            title: false,
+                            closeBtn: 0,
+                            shadeClose: true,
+                            skin: 'yourclass',
+                            width: 600,
+                            content: '<div style="width:360px; height: 300px; padding: 20px; "><form action="txs.html" method="post" name="myform" enctype="multipart/form-data"><label class="c-new-post__entry-name upload-image__label" for="iptfileupload" style=" width: 100px; height: 50px; padding-top: 15px; ">选择+</label><div><input type="file" id="iptfileupload" onchange="show()" value="" style=" display: none; " name="txs"/><br><br><img src="../img/txs/tx00.png" alt="" id="img" width="120" height="120"/><p><button class="c-btn c-btn-theme c-btn-radius c-new-post__form-submit" style=" margin-left: 0px; width: 60px; float: right;">保存</button></form><div></div>'
+                        });
+
+                    });
+                }
+
+            </script>
+
+
+            <script type="text/javascript">
+                function getPath(obj, fileQuery, transImg) {
+
+                    var imgSrc = '', imgArr = [], strSrc = '';
+
+                    if (window.navigator.userAgent.indexOf("MSIE") >= 1) { // IE浏览器判断
+                        if (obj.select) {
+                            obj.select();
+                            var path = document.selection.createRange().text;
+                            alert(path);
+                            obj.removeAttribute("src");
+                            imgSrc = fileQuery.value;
+                            imgArr = imgSrc.split('.');
+                            strSrc = imgArr[imgArr.length - 1].toLowerCase();
+                            if (strSrc.localeCompare('jpg') === 0 || strSrc.localeCompare('jpeg') === 0 || strSrc.localeCompare('gif') === 0 || strSrc.localeCompare('png') === 0) {
+                                obj.setAttribute("src", transImg);
+                                obj.style.filter =
+                                    "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + path + "', sizingMethod='scale');"; // IE通过滤镜的方式实现图片显示
+                            } else {
+                                //try{
+                                throw new Error('File type Error! please image file upload..');
+                                //}catch(e){
+                                // alert('name: ' + e.name + 'message: ' + e.message) ;
+                                //}
+                            }
+                        } else {
+                            // alert(fileQuery.value) ;
+                            imgSrc = fileQuery.value;
+                            imgArr = imgSrc.split('.');
+                            strSrc = imgArr[imgArr.length - 1].toLowerCase();
+                            if (strSrc.localeCompare('jpg') === 0 || strSrc.localeCompare('jpeg') === 0 || strSrc.localeCompare('gif') === 0 || strSrc.localeCompare('png') === 0) {
+                                obj.src = fileQuery.value;
+                            } else {
+                                //try{
+                                throw new Error('File type Error! please image file upload..');
+                                //}catch(e){
+                                // alert('name: ' + e.name + 'message: ' + e.message) ;
+                                //}
+                            }
+
+                        }
+
+                    } else {
+                        var file = fileQuery.files[0];
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+
+                            imgSrc = fileQuery.value;
+                            imgArr = imgSrc.split('.');
+                            strSrc = imgArr[imgArr.length - 1].toLowerCase();
+                            if (strSrc.localeCompare('jpg') === 0 || strSrc.localeCompare('jpeg') === 0 || strSrc.localeCompare('gif') === 0 || strSrc.localeCompare('png') === 0) {
+                                obj.setAttribute("src", e.target.result);
+                            } else {
+                                //try{
+                                throw new Error('File type Error! please image file upload..');
+                                //}catch(e){
+                                // alert('name: ' + e.name + 'message: ' + e.message) ;
+                                //}
+                            }
+
+                            // alert(e.target.result);
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                }
+
+                function show() {
+                    //以下即为完整客户端路径
+                    var file_img = document.getElementById("img"),
+                        iptfileupload = document.getElementById('iptfileupload');
+                    getPath(file_img, iptfileupload, file_img);
+                }
+            </script>
+
+
+            <div class="c-user-profile__secondary-module c-user-profile__contact-info">
+                <header class="c-user-profile__module-header">
+                    <h5 class="c-user-profile__module-title">基本信息</h5></header>
+                <p class="c-user-profile__module-row c-user-profile__username">用户名:&nbsp;<span
+                        class="c-user-profile__username-content">{{nkname}}</span></p>
+                <p class="c-user-profile__module-row c-user-profile__phone">手机:&nbsp;<span
+                        class="c-user-profile__phone-number">{{phone}}</span></p>
+                <p class="c-user-profile__module-row c-user-profile__contact-me"></p>
+            </div>
+        </div>
+        <div class="c-user-profile__module c-user-profile__module--career">
+            <header class="c-user-profile__module-header">
+                <h5 class="c-user-profile__module-title">职业信息</h5></header>
+            <a href="#"/>
+            <p class="c-user-profile__module-row c-user-profile__company">公司:&nbsp;<span
+                    class="c-user-profile__company-name">{{company}}</span></p>
+
+            <p class="c-user-profile__module-row c-user-profile__brand">品牌:&nbsp;<span
+                    class="c-user-profile__brand-name">{{brand}}</span></p>
+            <p class="c-user-profile__module-row c-suer-data__job">职位:&nbsp;<span
+                    class="c-user-profile__job-title">job</span></p>
+
+            </a>
+        </div>
+        <div class="c-user-profile__module c-user-profile__module--vip">
+            <header class="c-user-profile__module-header">
+                <h5 class="c-user-profile__module-title">会员特权</h5></header>
+
+
+            <style>
+                .c-user-profile__vip-show {
+
+                    width: 120px;
+                    float: left;
+                    text-align: center;
+                }
+
+                .c-user-profile__vip-show--gold .c-user-profile__vip-img {
+
+                    margin: 0 auto;
+                    width: 48px;
+                    height: 48px;
+                }
+
+                .c-user-profile__vip-show .c-user-profile__vip-img {
+                    margin: 0 auto;
+                    width: 48px;
+                    height: 48px;
+                }
+
+                .c-user-profile__vip-desc {
+
+                    margin-top: 10px;
+                }
+            </style>
+
+
+            <div class="c-user-profile__vip-show is-active">
+
+                <a href="#">
+                    {% if vip == 1 %}
+                    <img class="c-user-profile__vip-img" src="/static/asserts/images/post-article/rz1.png" alt="职业认证">
+                    {% elif vip == 2 %}
+                    <img class="c-user-profile__vip-img" src="/static/asserts/images/post-article/rz1.png" alt="职业认证">
+                    {% else %}
+                    <img class="c-user-profile__vip-img" src="/static/asserts/images/post-article/rz2.png" alt="职业认证">
+                    {%endif%}
+                    <p class="c-user-profile__vip-desc">职业认证</p></a>
+            </div>
+            <div class="c-user-profile__vip-show c-user-profile__vip-show--gold">
+
+                <a href="#">
+                    {% if vip == 2 %}
+                    <img class="c-user-profile__vip-img" src="/static/asserts/images/post-article/vip1.png" alt="金牌会员">
+                    {% elif vip == 3 %}
+                    <img class="c-user-profile__vip-img" src="/static/asserts/images/post-article/vip1.png" alt="金牌会员">
+                    {% else %}
+                    <img class="c-user-profile__vip-img" src="/static/asserts/images/post-article/vip2.png" alt="金牌会员">
+                    {%endif%}
+                    <p class="c-user-profile__vip-desc">金牌认证</p></a>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="c-user-control c-user-control--view-permission">
+        <header class="c-user-control__header">
+            <h4 class="c-user-control__title">每日查看联系方式数量</h4></header>
+        <div class="c-user-control__content">
+            <table class="c-user-table">
+                <thead class="c-user-table__header">
+                <tr class="c-user-table__rows">
+                    <th class="c-user-table__cell"></th>
+                    <th class="c-user-table__cell c-user-table__column-title">需求大厅</th>
+                    <th class="c-user-table__cell c-user-table__column-title">广告主/渠道主</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="c-user-table__row">
+                    <th class="c-user-table__cell c-user-table__row-title">今日可查看条数</th>
+                    <td class="c-user-table__cell">5</td>
+                    <td class="c-user-table__cell">0</td>
+                </tr>
+                <tr class="c-user-table__row">
+                    <th class="c-user-table__cell c-user-table__row-title">剩余查看条数</th>
+                    <td class="c-user-table__cell">4</td>
+                    <td class="c-user-table__cell">
+                        0
+                    </td>
+                </tr>
+                <tr class="c-user-table__row">
+                    <td class="c-user-table__cell"></td>
+                    <td class="c-user-table__cell">
+                        <a class="c-user-table__link" href="#">获得更多</a>
+                    </td>
+                    <td class="c-user-table__cell">
+                        <a class="c-user-table__link" href="#">获得更多</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="c-user-control">
+        <div class="c-user-post">
+            <div class="c-user-tab c-user-tab--post">
+                <header class="c-user-tab__header">
+                    <ul class="nav nav-tabs c-user-tab__nav-list" id="user-post-tab" role="tablist">
+                        <li class="nav-item c-user-tab__nav-item">
+                            <a class="nav-link c-user-tab__nav-link active" id="publish-post-tab"
+                               data-toggle="tab" href="#publish-post-content" role="tab"
+                               aria-controls="最近发布的合作信息" aria-selected="true">最近发布的合作信息</a>
+                        </li>
+                        <li class="nav-item c-user-tab__nav-item">
+                            <a class="nav-link c-user-tab__nav-link" id="participate-post-tab" data-toggle="tab"
+                               href="#participate-post-content" role="tab" aria-controls="最近参与的合作信息"
+                               aria-selected="false">最近参与的合作信息</a>
+                        </li>
+                    </ul>
+                </header>
+                <div class="tab-content c-user-tab__content">
+                    <div class="tab-pane active c-user-tab__pane" id="publish-post-content" data-publish="true"
+                         role="tabpanel" aria-labelledby="publish-post-tab">
+                        <ul class="list-unstyled c-user-todolist c-user-todolist--post">
+
+
+                        </ul>
+                        <!-- 如果没有已经发布的信息则显示去发布提示框-->
+                        <div class="c-user-post__new c-user-post__new--publish">
+                            <!--<h5 class="c-user-post__new-title">未发布过合作信息</h5>-->
+                            <a class="c-btn c-btn-theme c-btn-radius c-user-post__new-action"
+                               href="http://www.mybdhome.com/release.html">现在去发布</a>
+                        </div>
+                    </div>
+                    <div class="tab-pane c-user-tab__pane" id="participate-post-content" role="tabpanel"
+                         aria-labelledby="participate-post-tab">
+                        <ul class="list-unstyled c-user-todolist c-user-todolist--post">
+
+
+                            <li class="c-user-todolist__item">
+                                <div class="c-user-todolist__item-overview">
+                                    <h6 class="c-user-todolist__item-desc"><a class="c-user-todolist__item-link"
+                                                                              href="http://www.mybdhome.com/demand-10333.html">【广东中旅】【广东中旅】广东中国旅游/全深圳仅此一家提供免费旅游券/此券价值3866项目全免费/非购物团</a>
+                                    </h6></div>
+                                <div class="c-user-todolist__item-action">
+                                    <time class="c-user-todolist__item-time">2018-12-28 10:39:45</time>
+                                    <a class="c-user-post__publish-again"
+                                       href="http://www.mybdhome.com/release.html">再发一次</a>
+                                </div>
+                            </li>
+
+
+                        </ul>
+                        <!-- 如果没有参与过合作信息则显示去参与提示框-->
+                        <div class="c-user-post__new c-user-post__new--participate">
+                            <!--			<h5 class="c-user-post__new-title">未参与过合作信息</h5>-->
+                            <a class="c-btn c-btn-theme c-btn-radius c-user-post__new-action"
+                               href="/user/index/">现在去参与</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/popper.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+</div>
+
+{%endblock%}

@@ -1,0 +1,35 @@
+{%extends 'user/accountbase.html'%}
+
+{%block titlecss%}
+<title>快人脉-修改密码</title>
+{%endblock%}
+{%block body%}
+<div class="c-user__control-panel">
+
+
+    <div class="c-user-control">
+        <header class="c-user-control__header">
+            <h4 class="c-user-control__title">修改密码{%if msg%}&nbsp;&nbsp;&nbsp;&nbsp;<span
+                    style="color:red;">{{msg}}</span>{%endif%}</h4></header>
+        <div class="c-user-control__content">
+            <form class="c-account-form c-account-form--update-password" action="/user/changepasswdsave/" method="post">
+                {%csrf_token%}
+                <div class="c-account-form__group"><label class="c-account-form__label"
+                                                          for="phone-number">当前密码</label><input
+                        class="c-account-form__field" id="phone-number" placeholder="请输入当前账户密码" name="zpass"
+                        type="password" required=""></div>
+                <div class="c-account-form__group"><label class="c-account-form__label" for="password">新密码</label><input
+                        class="c-account-form__field" id="password" type="password" name="npass" value=""
+                        placeholder="请输入不少于6个字符的新密码" minlength="6" required=""><span class="c-account-form__field-hint"
+                                                                                     role="tooltip">密码长度过短</span></div>
+                <div class="c-account-form__group"><label class="c-account-form__label"
+                                                          for="confirm-password">确认新密码</label><input
+                        class="c-account-form__field" id="confirm-password" type="password" name="npass2" value=""
+                        placeholder="请再次确认新密码" minlength="6" required=""><span class="c-account-form__field-hint"
+                                                                               role="tooltip">您两次输入的密码不一致</span></div>
+                <button class="c-btn c-btn-theme c-btn-radius c-account-form__submit">保存</button>
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{%block titlecss%}
+<title>快人脉-注册</title>
+{%endblock%}
+{%block body%}
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script src="/static/js/layui.js?t=1508154136727" charset="utf-8"></script>
+
+
+<main class="page-main page-main--auth">
+    <div class="c-auth">
+        <div class="c-auth__header">
+            <h2 class="c-auth__title">注册人脉网</h2>
+        </div>
+        <div>
+            <span id="tip1" style="text-align:center;color: red;display: none;">
+                手机号码错误！
+            </span>
+        </div>
+        {% if msg %}
+        <div id="tip2">
+            <span style="text-align:center;color: red;">
+               {{msg}}
+            </span>
+        </div>
+        {%endif%}
+        <div class="c-auth__content">
+            <form class="c-auth__form" method="post" action="/user/register_handler/">
+                {% csrf_token %}
+                <div class="c-auth__form-group c-auth__form-group--phone">
+                    <input class="c-auth__input c-auth__phone" name="zphone" id="zphone" placeholder="手机号码" required>
+                </div>
+
+                <div class="c-auth__form-group c-auth__form-group--checksum">
+                    <input class="c-auth__input c-auth__checksum" name="zcode" id="zcode" placeholder="校验码" required>
+                    <img class="c-auth__img-checksum" src="/user/getcodeimg/" onclick="changing();" id="checkpic"></div>
+
+
+                <div class="c-auth__form-group c-auth__form-group--identification">
+                    <input name="zcode1" id="zcode1" class="c-auth__input c-auth__identification" placeholder="短信验证码"
+                           required>
+                    <button class="c-btn c-btn-text c-auth__fetch-identification" type="button" id="zzc1"
+                            onclick="codes(this)">获取验证码
+                    </button>
+
+                    <span id="zzc2" class="c-btn c-btn-text c-auth__fetch-identification"
+                          style="display: none;width: 74px;">60</span>
+
+                </div>
+
+
+                <div class="c-auth__form-group c-auth__form-group--password"><input type="password"
+                                                                                    class="c-auth__input c-auth__password"
+                                                                                    name="zpass" id="zpass"
+                                                                                    placeholder="设置密码" required></div>
+                <div class="c-auth__form-group c-auth__form-group--password-confirm"><input type="password"
+                                                                                            class="c-auth__input c-auth__password-confirm"
+                                                                                            name="zpass2" id="zpass2"
+                                                                                            placeholder="确认密码" required>
+                </div>
+                <div class="c-auth__form-group c-auth__form-group--action">
+                    <button class="btn c-auth__submit">注册</button>
+                </div>
+            </form>
+            <div class="c-auth__more"><span class="c-auth__agreement"><span
+                    class="c-auth__agreement-label">注册代表您已同意</span>
+                    <a class="c-auth__agreement-link" href="#">《网站用户协议》</a>
+                </span><span class="c-auth__login"><span class="c-auth__login-tip">已有账号</span>
+                    <a class="c-auth__login-link" href="/user/login/">直接登录</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script>
+    function changing() {
+        s = new Date().getTime()
+        document.getElementById('checkpic').src = "/user/getcodeimg/?t=" + s
+    }
+
+    function showTime1() {
+        var shu = $('#zzc2').text();
+        shu = shu - 1;
+        if (shu > 0) {
+            $('#zzc2').text(shu);
+            setTimeout("showTime1()", 1000);
+        } else {
+            $('#zzc1').show();
+            $('#zzc2').hide();
+        }
+    }
+
+</script>
+
+<script>
+    function codes(obbj) {
+        var zphone = $('#zphone').val();
+        if (zphone == "") {
+            alert("请填写手机号码")
+            return false;
+        }
+
+        var zcode = $('#zcode').val();
+        zcode = zcode.toLowerCase()
+
+        if (zcode == "") {
+            alert("请填写验证码")
+            return false;
+        }
+
+
+        var htmlobj = $.ajax({ url: "/user/getcode/", async: false });
+        var zcode1 = htmlobj.responseJSON.code
+        if (zcode1 != zcode) {
+            alert("验证码错误")
+            return false;
+        }
+
+        $.ajax({
+            url: '/user/register_sendmessage/',
+            type: 'GET',
+            dataType: 'json',
+            data: { 'phone': zphone },
+            success: function (rs) {
+                if (rs.status == 400) {
+                    $("#tip1").show();
+                    $("#tip1").text(rs.msg);
+                } else {
+                    msgobj = JSON.parse(rs.msg)
+                    if (msgobj.code == 2) {
+                         $('#zzc2').text("60")
+                         showTime1()
+                         $('#zzc2').show()
+                         $('#zzc1').hide()
+
+                    } else {
+                        $("#tip1").show();
+                        $("#tip1").text(msgobj.msg);
+                    }
+                }
+            },
+            error: function (rs) {
+                alert(rs)
+            }
+        })
+
+    }
+
+</script>
+{%endblock%}

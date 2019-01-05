@@ -1,0 +1,63 @@
+{%extends 'user/userbase.html'%}
+{%block titlecss%}
+<title>快人脉- 我的特权</title>
+{%endblock%}
+{%block body%}
+<div class="c-user__control-panel">
+    <div class="c-user-control c-user-control--vip-privilege">
+        <header class="c-user-control__header">
+            <h4 class="c-user-control__title">我的会员特权</h4></header>
+        <div class="c-user-control__content">
+            <table class="c-user-table">
+                <thead class="c-user-table__header">
+                <tr class="c-user-table__row">
+                    <th class="c-user-table__cell c-user-table__column-title">功能特权</th>
+                    <th class="c-user-table__cell c-user-table__column-title">普通会员</th>
+                    <th class="c-user-table__cell c-user-table__column-title">职业认证</th>
+                    <th class="c-user-table__cell c-user-table__column-title">金牌会员</th>
+                </tr>
+                </thead>
+                <tbody class="c-user-table__body">
+
+                <tr class="c-user-table__row">
+                    <td class="c-user-table__cell">异业大厅每日查看</td>
+                    <td class="c-user-table__cell">5</td>
+                    <td class="c-user-table__cell">8</td>
+                    <td class="c-user-table__cell">16</td>
+                </tr>
+                <tr class="c-user-table__row">
+                    <td class="c-user-table__cell">广告主+渠道主</td>
+                    <td class="c-user-table__cell">0</td>
+                    <td class="c-user-table__cell">1</td>
+                    <td class="c-user-table__cell">6</td>
+                </tr>
+                <tr class="c-user-table__row">
+                    <td class="c-user-table__cell">专属图标</td>
+                    <td class="c-user-table__cell">无</td>
+                    <td class="c-user-table__cell"><img src="/static/asserts/images/post-article/rz1.png"
+                                                        width="32px"></ing></td>
+                    <td class="c-user-table__cell"><span style="color: red;">红名展示</span></td>
+                </tr>
+
+                <tr class="c-user-table__row">
+                    <td class="c-user-table__cell"></td>
+                    <td class="c-user-table__cell"></td>
+                    <td class="c-user-table__cell">
+                        {%if vip == 0 or vip == 1%}
+                        <a class="c-user-table__link like-button c-btn c-btn-theme c-btn-radius"
+                           href="#">立即认证</a>
+                        {%endif%}
+                    </td>
+                    <td class="c-user-table__cell">
+                        {%if vip == 0 or vip == 3%}
+                        <a class="c-user-table__link like-button c-btn c-btn-theme c-btn-radius"
+                           href="#">成为会员</a>
+                        {%endif%}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,53 @@
+body, dd, dl, dt, h2, h3, h4, h6, li, ol, p, ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    -webkit-text-size-adjust: none;
+}
+
+
+.carousel{
+    margin-left: 5px;
+}
+body{
+    min-width: 1300px;
+}
+
+.c-trade-filter-panel{
+    margin:5px 0 5px 5px;
+}
+
+.justify-content-md-center{
+     min-width: 1280px;
+}
+
+.nav-tabs {
+    border-bottom: 2px solid rgb(245, 97, 39);
+}
+
+.nav-tabs .nav-item {
+    width: 80px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #fff;
+    font-weight:bold;
+    font-size: 14px;
+    background-color:  rgb(245, 97, 39);
+    border-color: #ddd #ddd  rgb(245, 97, 39);
+}
+
+.c-trade-filter-panel{
+    text-align: center;
+    /*min-width: 1280px;*/
+}
+
+
+.btn-secondary.dropdown-toggle {
+    color: rgb(0, 255, 0);
+    background-color: #0087fd;
+    border-color: #0080ff;
+    box-shadow: 0 0 0 0.2rem rgba(134, 142, 150, 0.8);
+}

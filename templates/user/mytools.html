@@ -1,0 +1,107 @@
+{%extends 'user/userbase.html'%}
+
+{%block titlecss%}
+<title>快人脉-我的道具</title>
+{%endblock%}
+{%block body%}
+<div class="c-user__control-panel">
+    <div class="c-user-control">
+        <div class="c-user-control__content c-user-tab c-user-tab--prop">
+            <header class="c-user-tab__header">
+                <ul class="nav nav-tabs c-user-tab__nav-list" id="user-prop-tab" role="tablist">
+                    <li class="nav-item c-user-tab__nav-item">
+                        <a class="nav-link c-user-tab__nav-link active" id="shop-prop-tab" data-toggle="tab"
+                           href="#shop-prop-content" role="tab" aria-controls="道具商城" aria-selected="true">道具商城</a>
+                    </li>
+                    <li class="nav-item c-user-tab__nav-item">
+                        <a class="nav-link c-user-tab__nav-link" id="personal-prop-tab" data-toggle="tab"
+                           href="#personal-prop-content" role="tab" aria-controls="我的道具" aria-selected="false">我的道具</a>
+                    </li>
+                </ul>
+            </header>
+            <div class="tab-content c-user-tab__content">
+                <div class="tab-pane c-user-tab__pane active" id="shop-prop-content" role="tabpanel"
+                     aria-labelledby="shop-prop-tab">
+                    <ul class="list-unstyled c-user-todolist c-user-todolist--prop">
+                        <li class="c-user-todolist__item c-user-todolist__item--prop">
+                            <div class="c-user-todolist__item-overview"><img class="c-user-todolist__item-avatar" src="/static/images/tools.png"
+                                                                             alt="道具头像">
+                                <div class="c-user-todolist__item-synopsis">
+                                    <h5 class="c-user-todolist__item-title">天下无敌道具的名称</h5>
+                                    <p class="c-user-todolist__item-desc">拥有此道具无敌是多么寂寞</p><span
+                                        class="c-user-todolist__item-price">￥30元/张</span></div>
+                            </div>
+                            <div class="c-user-todolist__item-action">
+                                <button class="c-btn c-btn-theme c-btn-radius c-user-todolist__item-button c-user-todolist__item-enable"
+                                        type="button">立即购买
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-pane c-user-tab__pane" id="personal-prop-content" role="tabpanel"
+                     aria-labelledby="personal-prop-tab">
+                    <ul class="list-unstyled c-user-todolist c-user-todolist--prop">
+                        <li class="c-user-todolist__item c-user-todolist__item--prop">
+                            <div class="c-user-todolist__item-overview"><img class="c-user-todolist__item-avatar" src="/static/images/tools.png"
+                                                                             alt="道具头像">
+                                <div class="c-user-todolist__item-synopsis">
+                                    <h5 class="c-user-todolist__item-title">天下无敌道具的名称</h5>
+                                    <p class="c-user-todolist__item-desc">拥有此道具无敌是多么寂寞</p><span
+                                        class="c-user-todolist__item-price">￥30元/张</span></div>
+                            </div>
+                            <div class="c-user-todolist__item-action">
+                                <button class="c-btn c-btn-theme c-btn-radius c-user-todolist__item-button c-user-todolist__item-enable"
+                                        type="button">立即使用
+                                </button>
+                            </div>
+                        </li>
+                        <li class="c-user-todolist__item c-user-todolist__item--prop">
+                            <div class="c-user-todolist__item-overview"><img class="c-user-todolist__item-avatar" src="/static/images/tools.png"
+                                                                             alt="道具头像">
+                                <div class="c-user-todolist__item-synopsis">
+                                    <h5 class="c-user-todolist__item-title">天下无敌道具的名称</h5>
+                                    <p class="c-user-todolist__item-desc">拥有此道具无敌是多么寂寞</p><span
+                                        class="c-user-todolist__item-price">￥30元/张</span></div>
+                            </div>
+                            <div class="c-user-todolist__item-action">
+                                <button class="c-btn c-btn-theme c-btn-radius c-user-todolist__item-button c-user-todolist__item-disable"
+                                        type="button">已使用
+                                </button>
+                            </div>
+                        </li>
+                        <li class="c-user-todolist__item c-user-todolist__item--prop">
+                            <div class="c-user-todolist__item-overview"><img class="c-user-todolist__item-avatar" src="/static/images/tools.png"
+                                                                             alt="道具头像">
+                                <div class="c-user-todolist__item-synopsis">
+                                    <h5 class="c-user-todolist__item-title">天下无敌道具的名称</h5>
+                                    <p class="c-user-todolist__item-desc">拥有此道具无敌是多么寂寞</p><span
+                                        class="c-user-todolist__item-price">￥30元/张</span></div>
+                            </div>
+                            <div class="c-user-todolist__item-action">
+                                <button class="c-btn c-btn-theme c-btn-radius c-user-todolist__item-button c-user-todolist__item-enable"
+                                        type="button">立即使用
+                                </button>
+                            </div>
+                        </li>
+                        <li class="c-user-todolist__item c-user-todolist__item--prop">
+                            <div class="c-user-todolist__item-overview"><img class="c-user-todolist__item-avatar" src="/static/images/tools.png"
+                                                                             alt="道具头像">
+                                <div class="c-user-todolist__item-synopsis">
+                                    <h5 class="c-user-todolist__item-title">天下无敌道具的名称</h5>
+                                    <p class="c-user-todolist__item-desc">拥有此道具无敌是多么寂寞</p><span
+                                        class="c-user-todolist__item-price">￥30元/张</span></div>
+                            </div>
+                            <div class="c-user-todolist__item-action">
+                                <button class="c-btn c-btn-theme c-btn-radius c-user-todolist__item-button c-user-todolist__item-disable"
+                                        type="button">已使用
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
