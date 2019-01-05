@@ -1,27 +1,14 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from commend.models import *
 from user.common import *
+from user.views import checklogin, addusername
 from django.db.models import Q
+import datetime
+import json
 
 
 # Create your views here.
-# 装饰器检查是否登录
-def checklogin(myfunc):
-    def check(request, *args, **kwargs):
-        if request.session.get('username'):
-            return myfunc(request, *args, **kwargs)
-        else:
-            return redirect("/user/login/")
-
-    return check
-
-
-# 字典添加username
-def addusername(content, request):
-    content['username'] = request.session.get('username')
-    return content
-
-
 # 需求发布页面
 @checklogin
 def demand(request):
@@ -129,7 +116,7 @@ def search(request, **kwargs):
     else:
         # 查询全部需求
         demandlist = Demand.objects.filter().order_by('starttime').values('id', 'title', 'starttime', 'money', 'count',
-                                                                       'msglevel', 'uerid', 'catagoryid')
+                                                                          'msglevel', 'uerid', 'catagoryid')
     rslist = []
     for demand in demandlist:  # 封装
         rsdir = {'demand': demand}
@@ -140,6 +127,26 @@ def search(request, **kwargs):
         classob = Classification.objects.get(pk=demand['catagoryid'])
         rsdir['catagory'] = classob.catagory
         rslist.append(rsdir)
-        print(user.vip)
     content['demandlist'] = rslist
     return render(request, 'demand/search.html', content)
+
+
+# 几天最热
+def ndayhot(request):
+    day = strtoint(request.GET.get('day'), 1)  # 获取前端传来天数
+
+    content = {}
+    yesteday = datetime.datetime.now() - datetime.timedelta(hours=23 * day, minutes=59, seconds=59)  # 前day天
+    # 获取前一天的所有数据,按浏览次数排序
+    dlist = Demand.objects.filter(starttime__gte=yesteday).order_by('-count').values('id', 'title', 'catagoryid')
+    if len(dlist) > 8:  # 取钱面8条数据
+        dlist = dlist[:8]
+    rslist = []
+    for d in dlist:
+        cls = Classification.objects.get(pk=d['catagoryid'])
+        d['cls'] = cls.catagory
+        rslist.append(d)
+        del d['catagoryid']
+    content['rslist'] = rslist
+    content = addusername(content, request)
+    return HttpResponse(json.dumps(content), content_type="application/json")

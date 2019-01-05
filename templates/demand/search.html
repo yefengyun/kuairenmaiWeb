@@ -1,145 +1,96 @@
 {% extends 'base.html' %}
-{%block titlecss%}
-<title>人脉网</title>
-{%endblock%}
-{%block body%}
-<main class="page-main page-main--trade" style="margin-top: 10px;margin-left: 10px">
-    <div class="clearfix c-trade">
-        <div class="c-trade__main">
-            <div class="c-user-tab c-user-tab--search">
-                <header class="c-user-tab__header">
-                    <ul class="nav nav-tabs c-user-tab__nav-list" id="search-tab" role="tablist">
-                        <li class="nav-item c-user-tab__nav-item">
-                            <a class="nav-link c-user-tab__nav-link active" id="industry-search-tab"
-                               href="?w=search&amp;so=找工作" role="tab" aria-controls="行业" aria-selected="true">搜索大厅</a>
-                        </li>
-                    </ul>
-                </header>
-                <div class="tab-content c-user-tab__tab-content" id="search-tab-content">
-                    <div class="tab-pane c-user-tab__tab-pane active" id="industry-search-content" role="tabpanel"
-                         aria-labelledby="industry-search-tab">
-                        <ul class="list-unstyled c-trade-card-list c-search-result">
-
-
-                            <li class="c-trade-card-item">
-                                <div class="c-trade-card">
-                                    <!-- 卡片中靠左，包括figure和info overview-->
-                                    <div class="c-trade-card__overview">
-                                        <figure class="c-trade-card__avatar">
-                                            <img class="c-trade-card__avatar-img" src="img/txs/tx00.png" alt="头像">
-                                            <figcaption class="c-trade-card__avatar-caption"
-                                                        style="text-align: center;">夜风云
-                                            </figcaption>
-                                        </figure>
-                                        <div class="c-trade-card__synopsis">
-                                            <h4 class="c-trade-card__title">
-                                                <a class="c-trade-card__link" target="_blank" href="demand-10653.html">【腾讯】找工作</a>
-                                            </h4>
-                                            <div class="c-trade-card__desc"><span
-                                                    class="c-trade-card__desc-name">我们需要</span>
-                                                <ul class="c-trade-card__desc-list">
-                                                    <li class="list-inline-item c-trade-card__desc-item"><span
-                                                            class="c-trade-card__desc-tag">优惠券</span></li>
-                                                    <li class="list-inline-item c-trade-card__desc-item"><span
-                                                            class="c-trade-card__desc-tag">线下广告</span></li>
-                                                </ul>
-                                            </div>
-                                            <div class="c-trade-card__desc"><span
-                                                    class="c-trade-card__desc-name">我们提供</span>
-                                                <ul class="c-trade-card__desc-list">
-
-                                                    <li class="list-inline-item c-trade-card__desc-item"><span
-                                                            class="c-trade-card__desc-tag">实物赞助</span></li>
-                                                    <li class="list-inline-item c-trade-card__desc-item"><span
-                                                            class="c-trade-card__desc-tag">其他</span></li>
-                                                    <li class="list-inline-item c-trade-card__desc-item"><span
-                                                            class="c-trade-card__desc-tag">费用支持</span></li>
-                                                    <li class="list-inline-item c-trade-card__desc-item"><span
-                                                            class="c-trade-card__desc-tag">优惠券</span></li>
-                                                </ul>
-                                                <!-- 卡片中靠右，包括企业认证，发帖人职位名称、发帖时间、帖子查看人数等-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="c-trade-card__status">
-                                        <div class="c-trade-card__certification" data-certification="true"> &nbsp;&nbsp;
-                                            大佬
-                                        </div>
-
-                                        <div class="c-trade-card__syslog" style="margin-top:73px;"><span
-                                                class="c-trade-card__time">2019-01-04 18:59:09</span><span
-                                                class="c-trade-card__viewnum">30</span></div>
-                                    </div>
-                                </div>
+{% block titlecss %}
+    <title>人脉网</title>
+{% endblock %}
+{% block body %}
+    <main class="page-main page-main--trade" style="margin-top: 10px;margin-left: 10px">
+        <div class="clearfix c-trade">
+            <div class="c-trade__main">
+                <div class="c-user-tab c-user-tab--search">
+                    <header class="c-user-tab__header">
+                        <ul class="nav nav-tabs c-user-tab__nav-list" id="search-tab" role="tablist">
+                            <li class="nav-item c-user-tab__nav-item">
+                                <a class="nav-link c-user-tab__nav-link active" id="industry-search-tab"
+                                   href="?w=search&amp;so=找工作" role="tab" aria-controls="行业"
+                                   aria-selected="true">搜索大厅</a>
                             </li>
-                            {%for dm in demandlist %}
-                            <li class="c-trade-card-item">
-                                <!-- 绝对定位，卡片左上角ribbon-->
-                                {%if dm.demand.msglevel%}
-                                <div class="c-trade-card-item__recommendation" data-recommendation="true">
-                                    <p class="c-trade-card-item__recommendation-ribbon"
-                                       style="background-color: #f5370c;">置顶</p>
-                                </div>
-                                {%endif%}
-
-                                <div class="c-trade-card">
-                                    <!-- 卡片中靠左，包括figure和info overview-->
-                                    <div class="c-trade-card__overview">
-                                        <figure class="c-trade-card__avatar"><img class="c-trade-card__avatar-img"
-                                                                                  src="/media/{{dm.user_headimg}}"
-                                                                                  alt="头像">
-                                            <figcaption class="c-trade-card__avatar-caption"
-                                                        style="text-align: center;">
-                                    <span {%if dm.user_vip == 1 or dm.user_vip == 2%}style="color:red" {%endif%}>
-                                    {{dm.user_nickname}}</span></figcaption>
-                                        </figure>
-                                        <div class="c-trade-card__synopsis">
-                                            <h4 class="c-trade-card__title">
-                                                <a class="c-trade-card__link" target="_blank" href="{{dm.demand.id}}"
-                                                   {%if dm.user_vip == 1 or dm.user_vip == 2%}style="color:red" {%endif%}>{{dm.demand.title}}</a>
-                                            </h4>
-                                            <div class="c-trade-card__desc"><span
-                                                    class="c-trade-card__desc-name">我们需要</span>
-                                                <ul class="c-trade-card__desc-list">
-                                                    <li class="list-inline-item c-trade-card__desc-item"><span
-                                                            class="c-trade-card__desc-tag">费用支持</span></li>
-                                                    <li class="list-inline-item c-trade-card__desc-item"><span
-                                                            class="c-trade-card__desc-tag">产品</span></li>
-                                                </ul>
-                                            </div>
-                                            <div class="c-trade-card__desc"><span
-                                                    class="c-trade-card__desc-name">我们提供</span>
-                                                <ul class="c-trade-card__desc-list">
-
-                                                    <li class="list-inline-item c-trade-card__desc-item"><span
-                                                            class="c-trade-card__desc-tag">线上广告</span></li>
-                                                </ul>
-                                                <!-- 卡片中靠右，包括企业认证，发帖人职位名称、发帖时间、帖子查看人数等-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="c-trade-card__status">
-                                        <div class="c-trade-card__certification" data-certification="true"> &nbsp;&nbsp;
-                                            {{dm.catagory}}
-                                        </div>
-
-                                        <div class="c-trade-card__syslog" style="margin-top:73px;"><span
-                                                class="c-trade-card__time">{{dm.demand.starttime}}</span><span
-                                                class="c-trade-card__viewnum">{{dm.demand.count}}</span></div>
-                                    </div>
-                                </div>
-                            </li>
-                            {%endfor%}
-
                         </ul>
+                    </header>
+                    <div class="tab-content c-user-tab__tab-content" id="search-tab-content">
+                        <div class="tab-pane c-user-tab__tab-pane active" id="industry-search-content" role="tabpanel"
+                             aria-labelledby="industry-search-tab">
+                            <ul class="list-unstyled c-trade-card-list c-search-result">
+                                {% for dm in demandlist %}
+                                    <li class="c-trade-card-item">
+                                        <!-- 绝对定位，卡片左上角ribbon-->
+                                        {% if dm.demand.msglevel %}
+                                            <div class="c-trade-card-item__recommendation" data-recommendation="true">
+                                                <p class="c-trade-card-item__recommendation-ribbon"
+                                                   style="background-color: #f5370c;">置顶</p>
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="c-trade-card">
+                                            <!-- 卡片中靠左，包括figure和info overview-->
+                                            <div class="c-trade-card__overview">
+                                                <figure class="c-trade-card__avatar"><img
+                                                        class="c-trade-card__avatar-img"
+                                                        src="/media/{{ dm.user_headimg }}"
+                                                        alt="头像">
+                                                    <figcaption class="c-trade-card__avatar-caption"
+                                                                style="text-align: center;">
+                                    <span {% if dm.user_vip == 1 or dm.user_vip == 2 %}style="color:red" {% endif %}>
+                                    {{ dm.user_nickname }}</span></figcaption>
+                                                </figure>
+                                                <div class="c-trade-card__synopsis">
+                                                    <h4 class="c-trade-card__title">
+                                                        <a class="c-trade-card__link" target="_blank"
+                                                           href="{{ dm.demand.id }}"
+                                                           {% if dm.user_vip == 1 or dm.user_vip == 2 %}style="color:red" {% endif %}>{{ dm.demand.title }}</a>
+                                                    </h4>
+                                                    <div class="c-trade-card__desc"><span
+                                                            class="c-trade-card__desc-name">我们需要</span>
+                                                        <ul class="c-trade-card__desc-list">
+                                                            <li class="list-inline-item c-trade-card__desc-item"><span
+                                                                    class="c-trade-card__desc-tag">费用支持</span></li>
+                                                            <li class="list-inline-item c-trade-card__desc-item"><span
+                                                                    class="c-trade-card__desc-tag">产品</span></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="c-trade-card__desc"><span
+                                                            class="c-trade-card__desc-name">我们提供</span>
+                                                        <ul class="c-trade-card__desc-list">
+
+                                                            <li class="list-inline-item c-trade-card__desc-item"><span
+                                                                    class="c-trade-card__desc-tag">线上广告</span></li>
+                                                        </ul>
+                                                        <!-- 卡片中靠右，包括企业认证，发帖人职位名称、发帖时间、帖子查看人数等-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="c-trade-card__status">
+                                                <div class="c-trade-card__certification" data-certification="true">
+                                                    &nbsp;&nbsp;
+                                                    {{ dm.catagory }}
+                                                </div>
+
+                                                <div class="c-trade-card__syslog" style="margin-top:73px;"><span
+                                                        class="c-trade-card__time">{{ dm.demand.starttime }}</span><span
+                                                        class="c-trade-card__viewnum">{{ dm.demand.count }}</span></div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
+            <div class="c-trade__aside" style="margin-top: 42px;">
+                <a href="#"><img class="c-trade-ad__img" src="/static/images/02.jpg" alt="广告位"></a>
+            </div>
         </div>
-        <div class="c-trade__aside" style="margin-top: 42px;">
-            <a href="#"><img class="c-trade-ad__img" src="/static/images/02.jpg" alt="广告位"></a>
-        </div>
-    </div>
-</main>
-{%endblock%}
+    </main>
+{% endblock %}

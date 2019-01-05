@@ -107,9 +107,8 @@ def register_sendmessage(request):
         resp = {'status': 400, 'msg': '该手机已注册'}
         return HttpResponse(json.dumps(resp), content_type="application/json")
     else:
-        # msgcode, response_str = common.send_message(moblie)
-        # print(msgcode, response_str)
-        msgcode, response_str = '123456', b'{"code":2,"msg":"\\u63d0\\u4ea4\\u6210\\u529f","smsid":"15464153595432868415"}'
+        msgcode, response_str = common.send_message(moblie)
+        # msgcode, response_str = '123456', b'{"code":2,"msg":"\\u63d0\\u4ea4\\u6210\\u529f","smsid":"15464153595432868415"}'
         request.session['msgcode'] = msgcode
         resp = {'status': 200, 'msg': response_str.decode()}
         return HttpResponse(json.dumps(resp), content_type="application/json")
@@ -123,9 +122,8 @@ def upass_sendmessage(request):
     # 通过手机去查找用户是否已经注册
     user = Userinfo.objects.filter(username=moblie)
     if len(user) == 1:
-        # msgcode, response_str = common.send_message(moblie)
-        # print(msgcode, response_str)
-        msgcode, response_str = '123456', b'{"code":2,"msg":"\\u63d0\\u4ea4\\u6210\\u529f","smsid":"15464153595432868415"}'
+        msgcode, response_str = common.send_message(moblie)
+        # msgcode, response_str = '123456', b'{"code":2,"msg":"\\u63d0\\u4ea4\\u6210\\u529f","smsid":"15464153595432868415"}'
         request.session['msgcode'] = msgcode
         resp = {'status': 200, 'msg': response_str.decode()}
         return HttpResponse(json.dumps(resp), content_type="application/json")
