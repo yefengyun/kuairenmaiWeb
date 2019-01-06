@@ -68,24 +68,40 @@ def publishdemand(request):
 
 # 首页
 def index(request, **kwargs):
+    permaxnum = 8  # 每页最多显示
+    maxpage = 8  # 最大显示页码数量
     content = {}  # 传输字典
     try:
         page = strtoint(kwargs['page'])  # 页数
     except Exception:
         page = 1
-    content['page'] = page
     un = request.session.get('username')  # 获取当前用户帐号
     if un:
         content['username'] = un
 
     # 查询全部需求
-    demandlist = Demand.objects.all().order_by('starttime').values('id', 'title', 'starttime', 'money', 'count',
-                                                                   'msglevel', 'uerid', 'catagoryid')
-    p = Paginator(demandlist, 2)
-    allpage = p.page_range
-    content['allpage'] = allpage
+    demandlist = Demand.objects.all().order_by('-starttime').values('id', 'title', 'starttime', 'money', 'count',
+                                                                    'msglevel', 'uerid', 'catagoryid')
+    p = Paginator(demandlist, permaxnum)  # 按每页最多permaxnum进行分页
+    allpage = p.num_pages  # 总页数
+    content['numpages'] = allpage
+
+    pagerange = p.page_range  # 全部分页范围从1开始
+
+    # 选取合适的maxpage页码
+    if content['numpages'] > maxpage:
+        if page < maxpage / 2:
+            pagerange = pagerange[:maxpage]
+        elif allpage - page > maxpage / 2:
+            pagerange = pagerange[allpage - maxpage:]
+        else:
+            pagerange = pagerange[page - maxpage / 2:page + maxpage / 2]
+    content['allpage'] = pagerange
+
+    # 取对应页对象
     demands = p.page(page)
-    rslist = []
+    content['pageobj'] = demands
+    rslist = []  # 存储分装好的数据
     for demand in demands:  # 封装
         rsdir = {'demand': demand}
         user = usermodels.Userinfo.objects.get(pk=demand['uerid'])
@@ -95,7 +111,6 @@ def index(request, **kwargs):
         classob = Classification.objects.get(pk=demand['catagoryid'])
         rsdir['catagory'] = classob.catagory
         rslist.append(rsdir)
-        print(user.vip)
     content['demandlist'] = rslist
     return render(request, 'index.html', content)
 
