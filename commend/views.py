@@ -168,5 +168,4 @@ def ndayhot(request):
         rslist.append(d)
         del d['catagoryid']
     content['rslist'] = rslist
-    content = addusername(content, request)
     return HttpResponse(json.dumps(content), content_type="application/json")

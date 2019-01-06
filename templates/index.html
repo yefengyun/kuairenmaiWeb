@@ -582,22 +582,49 @@
                     <header class="c-trade-news__header">
                         <h3 class="c-trade-news__title">今日最热</h3>
                     </header>
-                    <ol class="list-unstyled c-trade-news__nav-list">
-                        <li class="c-trade-news__nav-item">
-                            <a class="c-trade-news__nav-link" href="demand-10518.html">【快能贷】寻实力优质乙方贷超 量大的来！！！</a>
-                        </li>
-
-                    </ol>
+                    <ol class="list-unstyled c-trade-news__nav-list" id="todyhot"></ol>
                 </nav>
+                <script>
+                    $(document).ready(function () {
+                        $.ajax({
+                            url: '/commend/ndayhot/',
+                            method: 'GET',
+                            data: {'day': 1},
+                            dataType: 'json',
+                            success: function (result) {
+                                for (var i = 0; i < result.rslist.length; i++) {
+                                    console.log(result.rslist[i])
+                                    $('#todyhot').append("<li class=\"c-trade-news__nav-item\">" +
+                                        "<a class=\"c-trade-news__nav-link\" href=\"#\">【"
+                                        + result.rslist[i].cls + "】" + result.rslist[i].title + "</a></li>")
+                                }
+                            }
+                        })
+                    });
+                </script>
                 <nav class="c-trade-news c-trade-news--week">
                     <header class="c-trade-news__header">
                         <h3 class="c-trade-news__title">七天最热</h3>
                     </header>
-                    <ol class="list-unstyled c-trade-news__nav-list">
-                        <li class="c-trade-news__nav-item">
-                            <a class="c-trade-news__nav-link" href="demand-10308.html">【678棋牌】棋牌，彩票等产品找渠道合作</a>
-                        </li>
-                    </ol>
+                    <ol class="list-unstyled c-trade-news__nav-list" id="sevendayhot"></ol>
+                    <script>
+                        $(document).ready(function () {
+                            $.ajax({
+                                url: '/commend/ndayhot/',
+                                method: 'GET',
+                                data: {'day': 7},
+                                dataType: 'json',
+                                success: function (result) {
+                                    for (var i = 0; i < result.rslist.length; i++) {
+                                        console.log(result.rslist[i])
+                                        $('#sevendayhot').append("<li class=\"c-trade-news__nav-item\">" +
+                                            "<a class=\"c-trade-news__nav-link\" href=\"#\">【"
+                                            + result.rslist[i].cls + "】" + result.rslist[i].title + "</a></li>")
+                                    }
+                                }
+                            })
+                        });
+                    </script>
                 </nav>
             </div>
         </div>
