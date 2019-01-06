@@ -6,6 +6,7 @@ from user.views import checklogin, addusername
 from django.db.models import Q
 import datetime
 import json
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -80,8 +81,12 @@ def index(request, **kwargs):
     # 查询全部需求
     demandlist = Demand.objects.all().order_by('starttime').values('id', 'title', 'starttime', 'money', 'count',
                                                                    'msglevel', 'uerid', 'catagoryid')
+    p = Paginator(demandlist, 2)
+    allpage = p.page_range
+    content['allpage'] = allpage
+    demands = p.page(page)
     rslist = []
-    for demand in demandlist:  # 封装
+    for demand in demands:  # 封装
         rsdir = {'demand': demand}
         user = usermodels.Userinfo.objects.get(pk=demand['uerid'])
         rsdir['user_headimg'] = user.headimg
