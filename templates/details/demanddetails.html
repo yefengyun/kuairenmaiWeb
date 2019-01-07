@@ -9,12 +9,14 @@
                 <div class="c-post-overview">
                     <header class="c-post-overview__header">
                         <h3 class="c-post-overview__title">【{{ demand.catagoryid.catagory }}】{{ demand.title }}</h3>
-                        <small class="c-post-overview__status"><span class="c-post-overview__brand">NBA</span><span
-                                class="c-post-overview__job">大佬</span>
+                        <small class="c-post-overview__status">
+                            <span style="display:none;" id="demandid">{{ demand.id }}</span>
+                            <span class="c-post-overview__brand">NBA</span>
+                            <span class="c-post-overview__job">大佬</span>
                             <time class="c-post-overview__time">发布时间&nbsp;:&nbsp;{{ demand.starttime }}</time>
                             <button class="c-btn c-btn-text c-post-overview__collect" type="button">收藏</button>
                             <span class="c-post-overview__reply">回复数1</span><span
-                                    class="c-post-overview__visit">浏览量{{ demand.count }}</span></small>
+                                class="c-post-overview__visit">浏览量{{ demand.count }}</span></small>
                     </header>
                     <div class="c-post-overview__main">
                         <p class="c-post-overview__item"><span class="c-post-overview__item-name">需求:</span><span
@@ -75,13 +77,6 @@
 
                 <script>
                     function ck() {
-                        var oldtime = "1546617600";
-                        var newtime = "1546822214";
-                        //备注  这里弹窗
-                        if (oldtime < newtime) {
-                            alert('当前合作有效期已过！');
-                            return;
-                        }
                         //一般直接写在一个js文件中
                         layui.use(['layer', 'form'], function () {
                             //信息框-例4
@@ -92,7 +87,7 @@
                                 shade: false,
                                 maxmin: false, //开启最大化最小化按钮
                                 area: ['500px', '340px'],
-                                content: 'http://www.mybdhome.com//demandh.php?id=10653',
+                                content: '/commend/replyfrom/',
                                 end: function () {
                                     history.go(0);
                                 }
@@ -114,9 +109,9 @@
 
                     .sort_connect p {
                         padding: 30px 10px 40px;
-                        background: url(img/bg_hide.png) no-repeat;
+                        background: url(/static/images/bg_hide.png) no-repeat;
                         text-align: center;
-                        margin-bottom: 0rem;
+                        margin-bottom: 0;
                     }
 
                     .sort_connect p a {
@@ -131,29 +126,32 @@
                         <h4 class="c-post-comment__title">回复</h4></header>
                     <div class="c-post-replay__main">
                         <ul class="list-unstyled c-post-comment__list">
-                            <li class="clearfix c-post-comment__item">
-                                <figure class="c-post-comment__figure"><img class="c-post-comment__avatar"
-                                                                            src="img/txs/118791545979249.jpg" alt="头像">
-                                    <figcaption class="c-post-comment__caption">万可云</figcaption>
-                                </figure>
-                                <div class="c-post-comment__detail">
-                                    <p class="clearfix c-post-comment__status"><span
-                                            class="c-post-replay__business"><span
-                                            class="c-post-comment__brand">万可云</span><span class="c-post-comment__job">产品经理</span></span>
-                                        <time class="c-post-comment__time">发布时间&nbsp;:2019-01-04 20:22:40</time>
-                                    </p>
-                                    <p class="c-post-comment__content"> 合作</p>
-                                    <button class="c-btn c-btn-text c-post-comment__reply-action" type="button"
-                                            onclick="hxh(80588)">回复
-                                    </button>
+                            {% for rpls in replylist %}
+                                <li class="clearfix c-post-comment__item">
+                                    <figure class="c-post-comment__figure">
+                                        <img class="c-post-comment__avatar" src="/media/{{ rpls.uimg }}" alt="头像">
+                                        <figcaption class="c-post-comment__caption">{{ rpls.uname }}</figcaption>
+                                    </figure>
+                                    <div class="c-post-comment__detail">
+                                        <p class="clearfix c-post-comment__status"><span
+                                                class="c-post-replay__business"><span
+                                                class="c-post-comment__brand">{{ rpls.uname }}</span><span
+                                                class="c-post-comment__job">产品经理</span></span>
+                                            <time class="c-post-comment__time">发布时间&nbsp;:{{ rpls.createtime }}</time>
+                                        </p>
+                                        <p class="c-post-comment__content"> {{ rpls.repcontext }}</p>
+                                        <button class="c-btn c-btn-text c-post-comment__reply-action" type="button"
+                                                onclick="hxh(80588)">回复
+                                        </button>
 
-                                    <button class="c-btn c-btn-text c-post-comment__reply-collapse" id="h_x_h_t_80588"
-                                            data-collapse="true" onclick="hxhx(80588)">展开回复
-                                    </button>
-                                </div>
-                                <ul class="c-post-comment__reply-list" id="h_x_h_80588"></ul>
-                            </li>
-
+                                        <button class="c-btn c-btn-text c-post-comment__reply-collapse"
+                                                id="h_x_h_t_80588"
+                                                data-collapse="true" onclick="hxhx(80588)">展开回复
+                                        </button>
+                                    </div>
+                                    <ul class="c-post-comment__reply-list" id="h_x_h_80588"></ul>
+                                </li>
+                            {% endfor %}
                             <script>
                                 function hxh(a) {
                                     layui.use(['layer', 'form'], function () {
@@ -173,8 +171,6 @@
                                 }
 
                                 function hxhx(a) {
-
-
                                     if ($("#h_x_h_t_" + a).text() == "展开回复") {
                                         $("#h_x_h_" + a).show();
                                         $("#h_x_h_t_" + a).text("收起回复");
@@ -188,49 +184,46 @@
                     </div>
                 </div>
 
-
-                <nav class="c-pagination" aria-label="page navigation">
-                    <ul class="pagination c-pagination__page-list">
-                        <li class="page-item c-pagination__page-item">
-                            <a class="page-link c-pagination__page-link" href="demand-10653-1.html" tabindex="-1">◂&nbsp;上一页</a>
-                        </li>
-
-
-                        <li class="active page-item c-pagination__page-item">
-                            <span class="page-link c-pagination__page-link">1</span><span
-                                class="sr-only">(current)</span>
-                        </li>
-                        <li class=" page-item c-pagination__page-item">
-                            <a class="page-link c-pagination__page-link" href="demand-10653-2.html">2</a>
-                        </li>
-                        <li class=" page-item c-pagination__page-item">
-                            <a class="page-link c-pagination__page-link" href="demand-10653-3.html">3</a>
-                        </li>
-                        <li class=" page-item c-pagination__page-item">
-                            <a class="page-link c-pagination__page-link" href="demand-10653-4.html">4</a>
-                        </li>
-                        <li class=" page-item c-pagination__page-item">
-                            <a class="page-link c-pagination__page-link" href="demand-10653-5.html">5</a>
-                        </li>
-                        <li class=" page-item c-pagination__page-item">
-                            <a class="page-link c-pagination__page-link" href="demand-10653-6.html">6</a>
-                        </li>
-                        <li class=" page-item c-pagination__page-item">
-                            <a class="page-link c-pagination__page-link" href="demand-10653-7.html">7</a>
-                        </li>
-                        <li class=" page-item c-pagination__page-item">
-                            <a class="page-link c-pagination__page-link" href="demand-10653-8.html">8</a>
-                        </li>
-
-                        <li class="page-item c-pagination__page-item">
-                            <a class="page-link c-pagination__page-link" href="demand-10653-9.html">⋯</a>
-                        </li>
-
-                        <li class="page-item c-pagination__page-item">
-                            <a class="page-link c-pagination__page-link" href="demand-10653-2.html">下一页&nbsp;▸</a>
-                        </li>
-                    </ul>
-                </nav>
+                <div style="display: table;text-align: center;margin: auto;">
+                    <nav class="c-pagination" aria-label="page navigation">
+                        <ul class="pagination c-pagination__page-list">
+                            <li class=" page-item c-pagination__page-item">
+                                <a class="page-link c-pagination__page-link"
+                                   href="/commend/demandinfo/{{ demand.id }}/1">首页</a>
+                            </li>
+                            {% if pageobj.has_previous %}
+                                <li class="page-item c-pagination__page-item">
+                                    <a class="page-link c-pagination__page-link"
+                                       href="/commend/demandinfo/{{ demand.id }}/{{ currentpage |add:-1 }}"
+                                       tabindex="-1">&#9666;&nbsp;上一页</a>
+                                </li>
+                            {% endif %}
+                            {% for index in allpage %}
+                                {% if currentpage ==  index %}
+                                    <li class="active page-item c-pagination__page-item">
+                                        <span class="page-link c-pagination__page-link">{{ index }}</span>
+                                        <span class="sr-only">(current)</span>
+                                    </li>
+                                {% else %}
+                                    <li class=" page-item c-pagination__page-item">
+                                        <a class="page-link c-pagination__page-link"
+                                           href="/commend/demandinfo/{{ demand.id }}/{{ index }}">{{ index }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if pageobj.has_next %}
+                                <li class="page-item c-pagination__page-item">
+                                    <a class="page-link c-pagination__page-link"
+                                       href="/commend/demandinfo/{{ demand.id }}/{{ currentpage |add:1 }}">下一页&nbsp;&#9656;</a>
+                                </li>
+                            {% endif %}
+                            <li class=" page-item c-pagination__page-item">
+                                <a class="page-link c-pagination__page-link"
+                                   href="/commend/demandinfo/{{ demand.id }}/1">尾页</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
 
 

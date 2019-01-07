@@ -21,8 +21,8 @@ class Demand(models.Model):
     comment = models.CharField(max_length=250, null=False)
     # 地域要求
     area = models.CharField(max_length=50)
-    #称呼
-    othername=models.CharField(max_length=20,default='')
+    # 称呼
+    othername = models.CharField(max_length=20, default='')
     # 上传的图片
     image = models.ImageField(upload_to='demand/', default='demand/init.png')
     # 创建日期
@@ -32,9 +32,9 @@ class Demand(models.Model):
     # 赏金
     money = models.DecimalField(max_digits=10, decimal_places=2)
     # 联系方式
-    wechar = models.CharField(max_length=20, null=False,default='')  # 威信
-    QQ = models.CharField(max_length=20, null=True,default='')  # qq
-    tel = models.CharField(max_length=11, null=True,default='')  # tel
+    wechar = models.CharField(max_length=20, null=False, default='')  # 威信
+    QQ = models.CharField(max_length=20, null=True, default='')  # qq
+    tel = models.CharField(max_length=11, null=True, default='')  # tel
     # 浏览次数
     count = models.IntegerField(default=0)
     # 需求分类
@@ -48,3 +48,25 @@ class Demand(models.Model):
         db_table = "demand"
 
 
+# 用户回复
+class Reply(models.Model):
+    # 对应回复者id，外键
+    uerid = models.ForeignKey(usermodels.Userinfo, on_delete=models.CASCADE)
+    # 回复内容
+    repcontext = models.CharField(max_length=250, null=False)
+    # 创建日期
+    createtime = models.DateTimeField(auto_now=True)
+    # 对应需求
+    demandid = models.ForeignKey(Demand, on_delete=models.CASCADE, default=1)
+
+
+# 用户回复用户
+class Replytoreply(models.Model):
+    # 回复id，外键
+    replyid = models.ForeignKey(Reply, on_delete=models.CASCADE)
+    # 回复内容
+    rrepcontext = models.CharField(max_length=250, null=False)
+    # 创建日期
+    rcreatetime = models.DateTimeField(auto_now=True)
+    # 对应回复者id，外键
+    ruerid = models.ForeignKey(usermodels.Userinfo, on_delete=models.CASCADE)

@@ -5,3 +5,5 @@ from commend.models import *
 
 admin.site.register(Classification)
 admin.site.register(Demand)
+admin.site.register(Reply)
+admin.site.register(Replytoreply)

@@ -175,6 +175,10 @@ def ndayhot(request):
 def demandinfo(request, **kwargs):
     content = {}  # 传输字典
     try:
+        page = strtoint(kwargs['id'])  # 页数
+    except Exception:
+        page = 1
+    try:
         id = strtoint(kwargs['page'])  # 页数
     except Exception:
         return redirect("/commend/index/1")
@@ -199,13 +203,60 @@ def demandinfo(request, **kwargs):
         rsdir['catagory'] = classob.catagory
         rslist.append(rsdir)
     content['demandlist'] = rslist
-
-    # print(content)
+    content = reply(id, content, page)
+    print(content)
     return render(request, 'details/demanddetails.html', content)
 
 
 # 回复
-def reply(request):
+def reply(id, content, page):
+    permaxnum = 8  # 每页最多显示
+    maxpage = 8  # 最大显示页码数量
+    replylist = Reply.objects.filter(demandid_id=id).order_by('-createtime').values('id', 'repcontext', 'createtime',
+                                                                                    'uerid')
+    p = Paginator(replylist, permaxnum)  # 按每页最多permaxnum进行分页
+    allpage = p.num_pages  # 总页数
+    content['numpages'] = allpage
+
+    pagerange = p.page_range  # 全部分页范围从1开始
+
+    # 选取合适的maxpage页码
+    if content['numpages'] > maxpage:
+        if page < maxpage / 2:
+            pagerange = pagerange[:maxpage]
+        elif allpage - page > maxpage / 2:
+            pagerange = pagerange[allpage - maxpage:]
+        else:
+            pagerange = pagerange[page - maxpage / 2:page + maxpage / 2]
+    content['allpage'] = pagerange
+
+    # 取对应页对象
+    replypages = p.page(page)
+
+    rslist = []
+    for reply in replypages:
+        rsdir = {}
+        user = usermodels.Userinfo.objects.get(pk=strtoint(reply['uerid']))
+        uname = user.nickname if user.nickname else user.username
+        rsdir['uname'] = uname
+        uimg = user.headimg
+        rsdir['uimg'] = uimg
+        rsdir['id'] = reply['id']
+        rsdir['repcontext'] = reply['repcontext']
+        rsdir['createtime'] = reply['createtime']
+        rslist.append(rsdir)
+    content['replylist'] = rslist
+    content['currentpage'] = page
+    return content
+
+
+# 回复提交表单
+def replyfrom(request):
+    return render(request, 'details/replyfrom.html')
+
+
+# 回复保存
+def replyputdata(request):
     pass
 
 
