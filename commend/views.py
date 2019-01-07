@@ -169,3 +169,46 @@ def ndayhot(request):
         del d['catagoryid']
     content['rslist'] = rslist
     return HttpResponse(json.dumps(content), content_type="application/json")
+
+
+# 需求详情
+def demandinfo(request, **kwargs):
+    content = {}  # 传输字典
+    try:
+        id = strtoint(kwargs['page'])  # 页数
+    except Exception:
+        return redirect("/commend/index/1")
+
+    un = request.session.get('username')  # 获取当前用户帐号
+    if un:
+        content['username'] = un
+
+    demand = Demand.objects.get(pk=id)  # 找到对应发布的需求
+    content['demand'] = demand
+    demand.count = strtoint(demand.count) + 1
+    demand.save()
+    uid = demand.uerid  # 发布者id
+    content['user_nikename'] = uid.nickname if uid.nickname else uid.username
+    content['user_headimg'] = uid.headimg
+
+    demandlist = Demand.objects.filter(uerid=uid.id).order_by('starttime').values('id', 'title', 'catagoryid')
+    rslist = []
+    for demand in demandlist:  # 封装
+        rsdir = {'demand': demand}
+        classob = Classification.objects.get(pk=demand['catagoryid'])
+        rsdir['catagory'] = classob.catagory
+        rslist.append(rsdir)
+    content['demandlist'] = rslist
+
+    # print(content)
+    return render(request, 'details/demanddetails.html', content)
+
+
+# 回复
+def reply(request):
+    pass
+
+
+# 获取相应的回复
+def getreply(request, **kwargs):
+    pass

@@ -25,7 +25,7 @@ urlpatterns = [
     re_path(r'favicon.ico', RedirectView.as_view(url=r'/static/favicon.ico'), name='favicon'),
     re_path(r'^(?P<app>(\w+))/$', router, {'function': 'index'}),
     re_path(r'^(?P<app>(\w+))/(?P<function>(\w+))/$', router),
-    re_path(r'^(?P<app>(\w+))/(?P<function>(\w+))/(?P<page>(\d+))$', router),
+    re_path(r'^(?P<app>(\w+))/(?P<function>(\w+))/(?P<page>(\d*))$', router),
     re_path('^(?P<app>(\w+))/(?P<function>(\w+))/(?P<page>(\d+))/(?P<id>(\d+))/$', router),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

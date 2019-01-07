@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% block titlecss %}
+    <title>快人脉--需求详情</title>
+{% endblock %}
+{% block body %}
+    <main class="page-main page-main--post" style="margin-top: 10px;margin-left: 10px">
+        <div class="c-post clearfix">
+            <div class="c-post__main">
+                <div class="c-post-overview">
+                    <header class="c-post-overview__header">
+                        <h3 class="c-post-overview__title">【{{ demand.catagoryid.catagory }}】{{ demand.title }}</h3>
+                        <small class="c-post-overview__status"><span class="c-post-overview__brand">NBA</span><span
+                                class="c-post-overview__job">大佬</span>
+                            <time class="c-post-overview__time">发布时间&nbsp;:&nbsp;{{ demand.starttime }}</time>
+                            <button class="c-btn c-btn-text c-post-overview__collect" type="button">收藏</button>
+                            <span class="c-post-overview__reply">回复数1</span><span
+                                    class="c-post-overview__visit">浏览量{{ demand.count }}</span></small>
+                    </header>
+                    <div class="c-post-overview__main">
+                        <p class="c-post-overview__item"><span class="c-post-overview__item-name">需求:</span><span
+                                class="c-post-overview__item-value">{{ demand.catagoryid.catagory }}</span><span
+                                class="c-post-overview__item-flag">
+								代理/经销商
+							</span></p>
+                        <p class="c-post-overview__item"><span class="c-post-overview__item-name">寻找:</span><span
+                                class="c-post-overview__item-value">
+								优惠券&nbsp;&nbsp;线下广告&nbsp;&nbsp;
+								</span></p>
+                        <p class="c-post-overview__item"><span class="c-post-overview__item-name">合作地区:</span><span
+                                class="c-post-overview__item-value">
+								{{ demand.area }}&nbsp;&nbsp;
+							</span></p>
+                        <p class="c-post-overview__item"><span class="c-post-overview__item-name">截止时间:</span><span
+                                class="c-post-overview__item-value">{{ demand.endtime }}</span></p>
+                    </div>
+                </div>
+
+
+                <script src="https://hm.baidu.com/hm.js?42bf2023872596714259937eaebb4ab5"></script>
+                <script type="text/javascript" src="/static/js/jquery.js"></script>
+                <script src="/static/js/layui.js?t=1508154136727" charset="utf-8"></script>
+
+
+                <div class="c-post-desc">
+                    <div class="c-post-desc__module">
+                        <header class="c-post-desc__module-header">
+                            <h4 class="c-post-desc__module-title">我们提供</h4></header>
+                        <div class="c-post-desc__module-main">
+                            <img src="/media/{{ demand.image }}" alt="图片">
+                        </div>
+                    </div>
+                    <div class="c-post-desc__module">
+                        <header class="c-post-desc__module-header">
+                            <h4 class="c-post-desc__module-title">我们需求</h4></header>
+                        <div class="c-post-desc__module-main">
+                            <p class="c-post-desc__module-content">{{ demand.comment }}</p>
+                        </div>
+                    </div>
+                    <div class="c-post-desc__module c-post-desc__module--important">
+                        <header class="c-post-desc__module-header">
+                            <h4 class="c-post-desc__module-title">特别说明</h4></header>
+                        <div class="c-post-desc__module-main">
+                            <p class="c-post-desc__module-content">无</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="c-post-comment">
+                    <header class="c-post-comment__header">
+                        <h4 class="c-post-comment__title">合作联系方式</h4></header>
+                    <div class="sort_connect">
+                        <p><a onclick="ck()" href="#" id="post_reply">回复可见合作联系方式</a></p>
+                    </div>
+                </div>
+
+                <script>
+                    function ck() {
+                        var oldtime = "1546617600";
+                        var newtime = "1546822214";
+                        //备注  这里弹窗
+                        if (oldtime < newtime) {
+                            alert('当前合作有效期已过！');
+                            return;
+                        }
+                        //一般直接写在一个js文件中
+                        layui.use(['layer', 'form'], function () {
+                            //信息框-例4
+                            layer.open({
+                                type: 2,
+                                title: '回复后查看联系方式',
+                                shadeClose: true,
+                                shade: false,
+                                maxmin: false, //开启最大化最小化按钮
+                                area: ['500px', '340px'],
+                                content: 'http://www.mybdhome.com//demandh.php?id=10653',
+                                end: function () {
+                                    history.go(0);
+                                }
+                            });
+                        });
+                    }
+                </script>
+
+
+                <style>
+                    .sort_connect {
+                        margin: 5px 0 10px;
+                        border: 1px solid #4aa01e;
+                        background: #fffdf5;
+                        font-size: 14px;
+                        line-height: 30px;
+                        display: block;
+                    }
+
+                    .sort_connect p {
+                        padding: 30px 10px 40px;
+                        background: url(img/bg_hide.png) no-repeat;
+                        text-align: center;
+                        margin-bottom: 0rem;
+                    }
+
+                    .sort_connect p a {
+                        color: #2aa921;
+                        font-size: 28px;
+                    }
+                </style>
+
+
+                <div class="c-post-comment">
+                    <header class="c-post-comment__header">
+                        <h4 class="c-post-comment__title">回复</h4></header>
+                    <div class="c-post-replay__main">
+                        <ul class="list-unstyled c-post-comment__list">
+                            <li class="clearfix c-post-comment__item">
+                                <figure class="c-post-comment__figure"><img class="c-post-comment__avatar"
+                                                                            src="img/txs/118791545979249.jpg" alt="头像">
+                                    <figcaption class="c-post-comment__caption">万可云</figcaption>
+                                </figure>
+                                <div class="c-post-comment__detail">
+                                    <p class="clearfix c-post-comment__status"><span
+                                            class="c-post-replay__business"><span
+                                            class="c-post-comment__brand">万可云</span><span class="c-post-comment__job">产品经理</span></span>
+                                        <time class="c-post-comment__time">发布时间&nbsp;:2019-01-04 20:22:40</time>
+                                    </p>
+                                    <p class="c-post-comment__content"> 合作</p>
+                                    <button class="c-btn c-btn-text c-post-comment__reply-action" type="button"
+                                            onclick="hxh(80588)">回复
+                                    </button>
+
+                                    <button class="c-btn c-btn-text c-post-comment__reply-collapse" id="h_x_h_t_80588"
+                                            data-collapse="true" onclick="hxhx(80588)">展开回复
+                                    </button>
+                                </div>
+                                <ul class="c-post-comment__reply-list" id="h_x_h_80588"></ul>
+                            </li>
+
+                            <script>
+                                function hxh(a) {
+                                    layui.use(['layer', 'form'], function () {
+                                        layer.open({
+                                            type: 2,
+                                            title: '回复用户',
+                                            shadeClose: true,
+                                            shade: false,
+                                            maxmin: false, //开启最大化最小化按钮
+                                            area: ['500px', '340px'],
+                                            content: 'http://www.mybdhome.com//demandhh.php?id=' + a,
+                                            end: function () {
+                                                history.go(0);
+                                            }
+                                        });
+                                    })
+                                }
+
+                                function hxhx(a) {
+
+
+                                    if ($("#h_x_h_t_" + a).text() == "展开回复") {
+                                        $("#h_x_h_" + a).show();
+                                        $("#h_x_h_t_" + a).text("收起回复");
+                                    } else {
+                                        $("#h_x_h_" + a).hide();
+                                        $("#h_x_h_t_" + a).text("展开回复");
+                                    }
+                                }
+                            </script>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <nav class="c-pagination" aria-label="page navigation">
+                    <ul class="pagination c-pagination__page-list">
+                        <li class="page-item c-pagination__page-item">
+                            <a class="page-link c-pagination__page-link" href="demand-10653-1.html" tabindex="-1">◂&nbsp;上一页</a>
+                        </li>
+
+
+                        <li class="active page-item c-pagination__page-item">
+                            <span class="page-link c-pagination__page-link">1</span><span
+                                class="sr-only">(current)</span>
+                        </li>
+                        <li class=" page-item c-pagination__page-item">
+                            <a class="page-link c-pagination__page-link" href="demand-10653-2.html">2</a>
+                        </li>
+                        <li class=" page-item c-pagination__page-item">
+                            <a class="page-link c-pagination__page-link" href="demand-10653-3.html">3</a>
+                        </li>
+                        <li class=" page-item c-pagination__page-item">
+                            <a class="page-link c-pagination__page-link" href="demand-10653-4.html">4</a>
+                        </li>
+                        <li class=" page-item c-pagination__page-item">
+                            <a class="page-link c-pagination__page-link" href="demand-10653-5.html">5</a>
+                        </li>
+                        <li class=" page-item c-pagination__page-item">
+                            <a class="page-link c-pagination__page-link" href="demand-10653-6.html">6</a>
+                        </li>
+                        <li class=" page-item c-pagination__page-item">
+                            <a class="page-link c-pagination__page-link" href="demand-10653-7.html">7</a>
+                        </li>
+                        <li class=" page-item c-pagination__page-item">
+                            <a class="page-link c-pagination__page-link" href="demand-10653-8.html">8</a>
+                        </li>
+
+                        <li class="page-item c-pagination__page-item">
+                            <a class="page-link c-pagination__page-link" href="demand-10653-9.html">⋯</a>
+                        </li>
+
+                        <li class="page-item c-pagination__page-item">
+                            <a class="page-link c-pagination__page-link" href="demand-10653-2.html">下一页&nbsp;▸</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+
+            <div class="c-post__aside">
+                <div class="c-post-aside">
+                    <div class="c-post-aside__user">
+                        <figure class="c-post-aside__figure"><img class="c-post-aside__avatar"
+                                                                  src="/media/{{ user_headimg }}"
+                                                                  alt="头像">
+                            <figcaption class="c-post-aside__caption">
+                                <a class="c-post-aside__user-link" href="#">{{ user_nikename }}</a>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <div class="c-post-aside__main">
+                        <header class="c-post-aside__header">
+                            <h3 class="c-post-aside__title">最近发表</h3></header>
+                        <nav class="c-post-aside__nav">
+                            <ol class="list-unstyled c-post-aside__nav-list">
+                                {% for dms in demandlist %}
+                                    <li class="c-post-aside__nav-item">
+                                        <a class="c-post-aside__nav-link"
+                                           href="/commend/demandinfo/{{ dms.demand.id }}">【{{ dms.catagory }}】{{ dms.demand.title }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
